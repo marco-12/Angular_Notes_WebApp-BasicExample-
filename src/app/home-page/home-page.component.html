@@ -1,0 +1,81 @@
+<div class="p-3">
+  <p>
+    Ciao {{nomeUtente}} !
+  </p>
+  <div *ngIf="nomeUtente == 'Giovanna'">
+    SEI L'AMMINISTRATORE
+  </div>
+
+  <!-- 
+<div *ngFor="let manzione of arrayManzioni"
+  style="height: 30px; width: 100px; background-color: aqua; margin-bottom: 20px;">
+  {{manzione}}
+</div>
+-->
+
+  <div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">Cambia nome</span>
+    <input [(ngModel)]="nuovoNome" type="text" placeholder="Inserisci nome" class="form-control">
+  </div>
+
+  <div class="d-grid gap-2 col-6 mx-auto mt-3 mb-3">
+    <button (click)="cambiaNome()" class="btn btn-warning mr-3">
+      CAMBIA NOME
+    </button>
+
+
+    <button (click)="getDatiFromBe()" class="btn btn-success">
+      STAMPA NOTE
+    </button>
+
+    <button class="btn btn-primary" (click)="openNote()" *ngIf="!isOpenNote">
+      CREA NOTA
+    </button>
+
+    <button class="btn btn-secondary" (click)="closeNote()" *ngIf="isOpenNote">
+      ANNULLA
+    </button>
+  </div>
+
+  <div *ngIf="isOpenNote">
+    <span class="input-group-text" id="basic-addon1">Titolo</span>
+    <input [(ngModel)]="nuovoTitolo" type="text" placeholder="Inserisci il titolo" class="form-control">
+
+    <span class="input-group-text mt-3" id="basic-addon1">Contenuto</span>
+    <input [(ngModel)]="nuovoContenuto" type="text" placeholder="Inserisci il contenuto" class="form-control">
+
+    <button [class]="!nuovoTitolo || !nuovoContenuto ? 'btn btn-info mt-3 mb-3 disabled' : 'btn btn-info mt-3 mb-3'"
+      (click)="saveNote()">
+      SALVA
+    </button>
+  </div>
+
+  <ul class="list-group mt-3 mb-3">
+    <li class="list-group-item text-center" style="background-color: #6e3105; color: white;"
+      *ngIf="elencoNote && elencoNote.length > 0">Elenco Note</li>
+    <li [class]="elencoNote[0].id == nota.id ? 'list-group-item font-big' : 'list-group-item'"
+      style="background-color: #f5e02c;" *ngFor="let nota of elencoNote">
+      {{nota.title}} - {{nota.content}}
+      <div class="float-end">
+        <img style="cursor:pointer" src="assets/img/pen.svg" width="20" class="me-3" (click)="openEditNote(nota)">
+        <img style="cursor:pointer" src="assets/img/delete.svg" width="20" (click)="deleteNote(nota.id)">
+      </div>
+    </li>
+  </ul>
+
+  <div *ngIf="isOpenEditNote">
+    <span class="input-group-text" id="basic-addon1">Titolo</span>
+    <input [(ngModel)]="notaDaModificare.title"  type="text" placeholder="Modifica il titolo" class="form-control">
+
+    <span class="input-group-text mt-3" id="basic-addon1">Contenuto</span>
+    <input [(ngModel)]="notaDaModificare.content" type="text" placeholder="Modifica il contenuto" class="form-control">
+
+    <button [class]="!notaDaModificare.title || !notaDaModificare.content ? 'btn btn-info mt-3 mb-3 disabled' : 'btn btn-info mt-3 mb-3'"
+      (click)="editNote()">
+      SALVA
+    </button>
+    <button class="btn btn-secondary ms-3" (click)="closeEditNote()" *ngIf="isOpenEditNote">
+      ANNULLA
+    </button>
+  </div>
+</div>
